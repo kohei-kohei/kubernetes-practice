@@ -1,0 +1,19 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 2          ## レプリカ数の指定
+  selector:
+    matchLabels:
+      app: nginx
+  template:            ## PodTemplateのフィールド
+    metadata:
+      labels:
+        app: nginx
+        version: "A"   ## バージョンの指定
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.15
