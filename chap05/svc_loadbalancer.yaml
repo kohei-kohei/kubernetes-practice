@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+  annotations:
+  ## 内部ロードバランサとして起動
+  #  service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  ## 内部ロードバランサが所属するサブネットを指定
+  #  service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "frontend-subnet"
+spec:
+  selector:
+    app: nginx
+  type: LoadBalancer
+  ## 静的アドレスの指定
+  loadBalancerIP: 207.46.237.209
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: 8080
+    targetPort: 80
