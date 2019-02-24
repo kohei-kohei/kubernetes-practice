@@ -1,0 +1,26 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: front-end
+  namespace: sock-shop
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: front-end
+
+  minReplicas: 1   ## 最小レプリカ数
+  maxReplicas: 10  ## 最大レプリカ数
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+#  - type: Pods
+#    resource:
+#      name: cpu_system
+#      target:
+#        type: Value
+#        averageValue: 20m

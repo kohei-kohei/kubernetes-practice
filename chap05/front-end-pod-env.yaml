@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: front-end
+  namespace: sock-shop
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: front-end
+    spec:
+      containers:
+      - name: front-end
+        image: weaveworksdemos/front-end:0.3.12
+        resources:
+          requests:
+            cpu: 200m
+            memory: 100Mi
+        ports:
+        - containerPort: 8079
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+              - all
+          readOnlyRootFilesystem: true
+        env:
+        - name: CPU_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: front-end
+              resource: requests.cpu
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: front-end-cm  ## ConfigMapのname
+              key: FRONT_END_ENV  ## ConfigMapのKey
+        - name: NODE_DEBUG
+          valueFrom:
+            configMapKeyRef:
+              name: front-end-cm    ## ConfigMapのname
+              key: FRONT_END_DEBUG  ## ConfigMapのKey
+      nodeSelector:
+        beta.kubernetes.io/os: linux

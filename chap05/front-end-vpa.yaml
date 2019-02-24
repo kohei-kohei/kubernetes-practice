@@ -1,0 +1,22 @@
+apiVersion: "autoscaling.k8s.io/v1beta2"
+kind: VerticalPodAutoscaler
+metadata:
+  name: front-end
+  namespace: sock-shop
+spec:
+  targetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: front-end
+  updatePolicy:
+    updateMode: Auto
+  resourcePolicy:
+    containerPolicies:
+    - containerName: front-end
+      mode: Auto
+      minAllowed:
+        cpu: 50m
+        memory: 50Mi
+      maxAllowed:
+        cpu: 1000m
+        memory: 500Mi
