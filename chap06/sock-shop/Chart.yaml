@@ -1,0 +1,7 @@
+name: sock-shop
+version: 0.2.0
+apiVersion: v1
+description: A Helm chart for Sock Shop
+home: https://microservices-demo.github.io/
+icon: https://avatars3.githubusercontent.com/u/20818112
+engine: gotpl
