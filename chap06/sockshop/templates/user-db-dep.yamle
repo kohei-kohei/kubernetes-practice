@@ -1,20 +1,21 @@
 ---
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: carts-db
+  name: user-db
   labels:
-    name: carts-db
+    name: user-db
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: carts-db
+        name: user-db
     spec:
       containers:
-      - name: carts-db
-        image: mongo
+      - name: user-db
+        image: weaveworksdemos/user-db:0.3.0
+
         ports:
         - name: mongo
           containerPort: 27017

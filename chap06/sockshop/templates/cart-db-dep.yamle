@@ -1,23 +1,23 @@
 ---
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: session-db
+  name: carts-db
   labels:
-    name: session-db
+    name: carts-db
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: session-db
+        name: carts-db
     spec:
       containers:
-      - name: session-db
-        image: redis:alpine
+      - name: carts-db
+        image: mongo
         ports:
-        - name: redis
-          containerPort: 6379
+        - name: mongo
+          containerPort: 27017
         securityContext:
           capabilities:
             drop:
@@ -27,3 +27,10 @@ spec:
               - SETGID
               - SETUID
           readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory

@@ -1,36 +1,36 @@
 ---
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: user
+  name: orders
   labels:
-    name: user
+    name: orders
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: user
+        name: orders
     spec:
       containers:
-      - name: user
-        image: weaveworksdemos/user:0.4.4
+      - name: orders
+        image: weaveworksdemos/orders:0.4.7
+        env:
+         {{- if .Values.zipkin.enabled }}
+         - name: ZIPKIN
+           value: {{ .Values.zipkin.url }}
+         {{- end }}
+         - name: JAVA_OPTS
+           value: {{ .Values.java.options }}
         resources:
           limits:
-            cpu: 300m
-            memory: 1000Mi
+            cpu: 500m
+            memory: 2000Mi
           requests:
-            cpu: 100m
-            memory: 400Mi
+            cpu: 200m
+            memory: 2000Mi
         ports:
         - containerPort: 80
-        env:
-        - name: MONGO_HOST
-          value: user-db:27017
-        {{- if .Values.zipkin.enabled }}
-        - name: ZIPKIN
-          value: http://{{ .Values.zipkin.url }}:9411/api/v1/spans
-        {{- end }}
         securityContext:
           runAsNonRoot: true
           runAsUser: 10001
@@ -40,6 +40,9 @@ spec:
             add:
               - NET_BIND_SERVICE
           readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
         livenessProbe:
           httpGet:
             path: /health
@@ -52,3 +55,8 @@ spec:
             port: 80
           initialDelaySeconds: 180
           periodSeconds: 3
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+
