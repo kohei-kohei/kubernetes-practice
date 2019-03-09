@@ -1,0 +1,15 @@
+apiVersion: v1
+entries:
+  sockshop:
+  - apiVersion: v1
+    created: 2019-03-09T01:23:12.104337678Z
+    description: A Helm chart for Sock Shop
+    digest: 841ef3ed9f79aa9ebc6506b433b395dc334f9df7f11887649675e06e45871f91
+    engine: gotpl
+    home: https://microservices-demo.github.io/
+    icon: https://avatars3.githubusercontent.com/u/20818112
+    name: sockshop
+    urls:
+    - sockshop-0.2.0.tgz
+    version: 0.2.0
+generated: 2019-03-09T01:23:12.10269149Z
