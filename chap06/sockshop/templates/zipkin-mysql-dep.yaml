@@ -3,9 +3,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: zipkin-mysql
-  labels:
-    name: zipkin-mysql
 spec:
+  selector:
+    matchLabels:
+      name: zipkin-mysql
   replicas: 1
   template:
     metadata:

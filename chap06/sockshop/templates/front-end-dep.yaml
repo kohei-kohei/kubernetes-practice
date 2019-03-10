@@ -4,6 +4,9 @@ kind: Deployment
 metadata:
   name: front-end
 spec:
+  selector:
+    matchLabels:
+      name: front-end
   replicas: {{ .Values.frontend.replicas }}
   template:
     metadata:

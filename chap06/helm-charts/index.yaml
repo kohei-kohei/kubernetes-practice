@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   sockshop:
   - apiVersion: v1
-    created: 2019-03-09T01:23:12.104337678Z
+    created: 2019-03-09T01:50:05.606297154Z
     description: A Helm chart for Sock Shop
     digest: 841ef3ed9f79aa9ebc6506b433b395dc334f9df7f11887649675e06e45871f91
     engine: gotpl
@@ -12,4 +12,4 @@ entries:
     urls:
     - sockshop-0.2.0.tgz
     version: 0.2.0
-generated: 2019-03-09T01:23:12.10269149Z
+generated: 2019-03-09T01:50:05.603976375Z
