@@ -1,5 +1,5 @@
 FROM golang:1.10 AS build-env
-RUN cp -f /chap07/context/app /app && go build -o hello hello.go
+RUN cp -f /chap07/build/context/app /app && go build -o hello hello.go
 
 FROM alpine
 WORKDIR /app
