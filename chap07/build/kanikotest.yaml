@@ -27,7 +27,7 @@ spec:
       - name: kaniko
         image: gcr.io/kaniko-project/executor:latest
         args: ["--dockerfile=/chap07/build/context/Dockerfile",
-              "--context=/chap07/build/context",
+              "--context=/chap07/build",
               "--destination=registry.gitlab.com/cloudnative_impress/tutorial/container:latest"]
         volumeMounts:
           - name: context
