@@ -19,19 +19,19 @@ spec:
             - --single-branch
             - --
             - https://shkitayama:vJy4zY93UBmLgvqYxLsA@gitlab.com/cloudnative_impress/tutorial.git
-            - /chap07/build/context
+            - /tutorial
         volumeMounts:
         - name: context
-          mountPath: /chap07/build/context
+          mountPath: /tutorial
       containers:
       - name: kaniko
         image: gcr.io/kaniko-project/executor:latest
-        args: ["--dockerfile=/chap07/build/context/Dockerfile",
-              "--context=/chap07/build/context",
+        args: ["--dockerfile=/tutorial/chap07/build/context/Dockerfile",
+              "--context=/tutorial/chap07/build/context",
               "--destination=registry.gitlab.com/cloudnative_impress/tutorial/container:latest"]
         volumeMounts:
           - name: context
-            mountPath: /chap07/build/context
+            mountPath: /tutorial
           - name:  registry-creds
             mountPath: /root/
       volumes:
