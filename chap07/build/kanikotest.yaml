@@ -18,11 +18,11 @@ spec:
             - clone
             - --single-branch
             - --
-            - https://github.com/repo/code.git
-            - /context
+            - git clone https://shkitayama:vJy4zY93UBmLgvqYxLsA@gitlab.com/cloudnative_impress/tutorial.git
+            - /chap07/build/context
         volumeMounts:
         - name: context
-          mountPath: /context
+          mountPath: /chap07/build/context
       containers:
       - name: kaniko
         image: gcr.io/kaniko-project/executor:latest
@@ -31,7 +31,7 @@ spec:
               "--destination=registry/repo/container:latest"]
         volumeMounts:
           - name: context
-            mountPath: /context
+            mountPath: /chap07/build/context
           - name:  registry-creds
             mountPath: /root/
       volumes:
