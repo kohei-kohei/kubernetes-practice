@@ -18,7 +18,7 @@ spec:
             - clone
             - --single-branch
             - --
-            - git clone https://shkitayama:vJy4zY93UBmLgvqYxLsA@gitlab.com/cloudnative_impress/tutorial.git
+            - https://shkitayama:vJy4zY93UBmLgvqYxLsA@gitlab.com/cloudnative_impress/tutorial.git
             - /chap07/build/context
         volumeMounts:
         - name: context
@@ -26,9 +26,9 @@ spec:
       containers:
       - name: kaniko
         image: gcr.io/kaniko-project/executor:latest
-        args: ["--dockerfile=/context/Dockerfile",
-              "--context=/context",
-              "--destination=registry/repo/container:latest"]
+        args: ["--dockerfile=/chap07/build/context/Dockerfile",
+              "--context=/chap07/build/context",
+              "--destination=registry.gitlab.com/cloudnative_impress/tutorial/container:latest"]
         volumeMounts:
           - name: context
             mountPath: /chap07/build/context
