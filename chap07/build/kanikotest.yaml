@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kanikojob
+  namespace: kaniko
+spec:
+  completions: 1
+  template:
+    metadata:
+      name: kanikojob
+      namespace: kaniko
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: init-clone-repo
+        image: alpine/git
+        args:
+            - clone
+            - --single-branch
+            - --
+            - https://github.com/repo/code.git
+            - /context
+        volumeMounts:
+        - name: context
+          mountPath: /context
+      containers:
+      - name: kaniko
+        image: gcr.io/kaniko-project/executor:latest
+        args: ["--dockerfile=/context/Dockerfile",
+              "--context=/context",
+              "--destination=registry/repo/container:latest"]
+        volumeMounts:
+          - name: context
+            mountPath: /context
+          - name:  registry-creds
+            mountPath: /root/
+      volumes:
+        - name: registry-creds
+          projected:
+            sources:
+            - secret:
+                name: docker-secret
+                items:
+                - key: .dockerconfigjson
+                  path: .docker/config.json
+        - name: context
+          emptyDir: {}
