@@ -1,5 +1,5 @@
 FROM golang:1.10 AS build-env
-COPY /tutorial/chap07/build/context/app /app
+COPY . /app
 RUN cd /app && go build -o hello hello.go
 
 FROM alpine
