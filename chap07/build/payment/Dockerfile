@@ -25,11 +25,11 @@ RUN  addgroup -g ${SERVICE_GID} ${SERVICE_GROUP} && \
 
 WORKDIR /
 EXPOSE 80
-COPY --from=build-env /app /
+COPY --from=build-env /app /app
 
-RUN     chmod +x /app && \
-        chown -R ${SERVICE_USER}:${SERVICE_GROUP} /app && \
-        setcap 'cap_net_bind_service=+ep' /app
+RUN  chmod +x /app && \
+     chown -R ${SERVICE_USER}:${SERVICE_GROUP} /app && \
+     setcap 'cap_net_bind_service=+ep' /app
 
 USER ${SERVICE_USER}
 
