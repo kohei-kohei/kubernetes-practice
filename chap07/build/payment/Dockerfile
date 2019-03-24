@@ -10,7 +10,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app/main github.
 
 # CMD ["/app/main", "-port=80"]
 
-#EXPOSE 80
 # FROM alpine:3.4
 FROM alpine
 
@@ -25,7 +24,7 @@ RUN  addgroup -g ${SERVICE_GID} ${SERVICE_GROUP} && \
 
 WORKDIR /
 EXPOSE 80
-COPY --from=build-env /app /app
+COPY --from=build-env /app/main /app
 
 RUN  chmod +x /app && \
      chown -R ${SERVICE_USER}:${SERVICE_GROUP} /app && \
