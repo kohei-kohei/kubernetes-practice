@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko
+  namespace: kaniko
+spec:
+  containers:
+  - name: kanikobuild-container
+    image: registry.gitlab.com/cloudnative_impress/tutorial/container:latest
+  imagePullSecrets:
+  - name: docker-secret
+
