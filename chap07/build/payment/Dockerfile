@@ -28,7 +28,7 @@ COPY --from=build-env /app/main /app
 
 RUN  chmod +x /app && \
      chown -R ${SERVICE_USER}:${SERVICE_GROUP} /app && \
-     setcap 'cap_net_bind_service=+ep' /app
+     setcap 'cap_net_bind_service=+eip' /app
 
 USER ${SERVICE_USER}
 
