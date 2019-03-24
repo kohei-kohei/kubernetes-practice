@@ -14,10 +14,10 @@ import (
 
 var (
 	HTTPLatency = prometheus.NewHistogramVec(prometheus.HistogramOpts{
-		Name:    "http_request_duration_seconds",
+		Name:    "request_duration_seconds",
 		Help:    "Time (in seconds) spent serving HTTP requests.",
 		Buckets: prometheus.DefBuckets,
-	}, []string{"method", "path", "status_code", "isWS"})
+	}, []string{"method", "route", "status_code", "isWS"})
 )
 
 func init() {
