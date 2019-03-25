@@ -1,5 +1,4 @@
-#FROM golang:1.10 as build-env
-FROM golang:1.7 as build-env
+FROM golang:1.10 as build-env
 
 RUN mkdir /app
 COPY . /go/src/github.com/microservices-demo/payment/
@@ -11,7 +10,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app/main github.
 
 # CMD ["/app/main", "-port=80"]
 
-FROM alpine:3.4
+FROM alpine:3.7
 # FROM alpine
 
 ENV  SERVICE_USER=myuser \
@@ -24,7 +23,7 @@ RUN  addgroup -g ${SERVICE_GID} ${SERVICE_GROUP} && \
      apk add --update libcap
 
 WORKDIR /
-EXPOSE 80
+EXPOSE 8080
 COPY --from=build-env /app/main /app
 
 RUN  chmod +x /app && \
@@ -33,7 +32,4 @@ RUN  chmod +x /app && \
 
 USER ${SERVICE_USER}
 
-RUN ls -la /app
-RUN env
-
-CMD ["/app", "-port=80"]
+CMD ["/app", "-port=8080"]
