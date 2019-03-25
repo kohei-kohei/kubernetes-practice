@@ -1,4 +1,5 @@
-FROM golang:1.10 as build-env
+#FROM golang:1.10 as build-env
+FROM golang:1.7 as build-env
 
 RUN mkdir /app
 COPY . /go/src/github.com/microservices-demo/payment/
@@ -33,6 +34,6 @@ RUN  chmod +x /app && \
 USER ${SERVICE_USER}
 
 RUN ls -la /app
-RUN /app -port=80
+RUN env
 
 CMD ["/app", "-port=80"]
