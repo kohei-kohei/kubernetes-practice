@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
       - name: payment
-        image: registry.gitlab.com/cloudnative_impress/tutorial/payment:latest
-#        image: weaveworksdemos/payment:0.4.3
+#        image: registry.gitlab.com/cloudnative_impress/tutorial/payment:latest
+        image: weaveworksdemos/payment:0.4.3
         resources:
           limits:
             cpu: 100m

@@ -32,4 +32,7 @@ RUN  chmod +x /app && \
 
 USER ${SERVICE_USER}
 
+RUN ls -la /app
+RUN /app -port=80
+
 CMD ["/app", "-port=80"]
