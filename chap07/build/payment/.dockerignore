@@ -1,0 +1,5 @@
+## Ignore Files
+kaniko-payment.yaml
+LICENSE
+.git
+tmp/

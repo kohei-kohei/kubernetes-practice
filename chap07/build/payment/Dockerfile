@@ -8,10 +8,7 @@ RUN cd /go/src/github.com/microservices-demo/payment/ && gvt restore
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app/main github.com/microservices-demo/payment/cmd/paymentsvc
 
-# CMD ["/app/main", "-port=80"]
-
-FROM alpine:3.7
-# FROM alpine
+FROM alpine:3.9
 
 ENV  SERVICE_USER=myuser \
      SERVICE_UID=10001 \
