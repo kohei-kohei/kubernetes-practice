@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kaniko-payment
+  namespace: kaniko
+spec:
+  completions: 1
+  template:
+    metadata:
+      name: kaniko-payment
+      namespace: kaniko
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: init-clone-repo
+        image: alpine/git
+        args:
+            - clone
+            - --single-branch
+            - --
+            - https://shkitayama:vJy4zY93UBmLgvqYxLsA@gitlab.com/cloudnative_impress/tutorial.git
+            - /tutorial
+        volumeMounts:
+        - name: context
+          mountPath: /tutorial
+      containers:
+      - name: kaniko
+        image: gcr.io/kaniko-project/executor:debug
+        args: ["--dockerfile=/tutorial/chap07/build/payment/Dockerfile",
+              "--context=/tutorial/chap07/build/payment",
+              "--destination=registry.gitlab.com/cloudnative_impress/tutorial/payment:latest"]
+        volumeMounts:
+          - name: context
+            mountPath: /tutorial
+          - name:  registry-creds
+            mountPath: /root/
+      volumes:
+        - name: registry-creds
+          projected:
+            sources:
+            - secret:
+                name: docker-secret
+                items:
+                - key: .dockerconfigjson
+                  path: .docker/config.json
+        - name: context
+          emptyDir: {}
