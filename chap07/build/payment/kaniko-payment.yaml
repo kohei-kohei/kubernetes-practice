@@ -2,13 +2,13 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: kaniko-payment
-  namespace: kaniko
+  namespace: payment
 spec:
   completions: 1
   template:
     metadata:
       name: kaniko-payment
-      namespace: kaniko
+      namespace: payment
     spec:
       restartPolicy: Never
       initContainers:
