@@ -1,12 +1,14 @@
+# syntax = docker/dockerfile:experimental
 FROM golang:1.7 as build-env
 
 ENV  BUILD_DIR=/go/src/github.com/microservices-demo/payment
-RUN mkdir /app
+RUN  mkdir /app
 COPY . ${BUILD_DIR}/
 
-RUN go get -u github.com/FiloSottile/gvt
-RUN cd ${BUILD_DIR}/ && gvt restore
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app/main github.com/microservices-demo/payment/cmd/paymentsvc
+RUN  go get -u github.com/FiloSottile/gvt
+RUN  cd ${BUILD_DIR}/ && gvt restore -connections 20
+RUN  CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app/main github.com/microservices-demo/payment/cmd/paymentsvc
+# RUN  --mount=type=cache,target=${BUILD_DIR}/vendor/ CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app/main github.com/microservices-demo/payment/cmd/paymentsvc
 
 FROM alpine:3.9
 
@@ -27,4 +29,4 @@ RUN  chmod +x /app && \
      setcap 'cap_net_bind_service=+ep' /app
 
 USER ${SERVICE_USER}
-CMD ["/app", "-port=8080"]
+CMD  ["/app", "-port=8080"]
