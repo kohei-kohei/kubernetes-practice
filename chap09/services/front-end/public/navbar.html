@@ -163,7 +163,7 @@ _________________________________________________________ -->
             <div class="navbar-collapse collapse right" id="basket-overview">
                 <a href="basket.html" class="btn btn-primary navbar-btn"><i
                         class="fa fa-shopping-cart"></i><span class="hidden-sm"
-                                                              id="numItemsInCart">0 items in cart</span></a>
+                                                              id="numItemsInCart">waiting for your cart...</span></a>
             </div>
             <!--/.nav-collapse -->
 
@@ -211,7 +211,7 @@ _________________________________________________________ -->
         }
 
         $.getJSON('/cart', {}, function (data) {
-            if (data != null) {
+            if (data != null && data.length > 0) {
                 var numItemsInCart = 0;
                 $.each(data, function (index, element) {
                     if (element != null && element.itemId != null && element.itemId != "null") {
@@ -222,9 +222,10 @@ _________________________________________________________ -->
                         });
                     }
                 });
+            } else {
+                $('#numItemsInCart').text('0 item(s) in cart');
             }
         }).error(function () {
-            // $('#basket-overview').remove();
             $('#numItemsInCart').text('Sorry, your cart is temporarily unavailable...!');
         });
 
