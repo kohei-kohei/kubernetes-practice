@@ -1,10 +1,12 @@
-apiVersion: skaffold/v1beta7
+apiVersion: skaffold/v1beta8
 kind: Config
 build:
+  tagPolicy:
+    envTemplate:
+      template: "{{.IMAGE_NAME}}:buildkit"
   artifacts:
-     - image: skaffold/payment-buildkit
-#    - docker:
-       context: ../build/payment
+     - image: skaffold/payment
+       context: .
   local:
     useBuildkit: true
     push: false

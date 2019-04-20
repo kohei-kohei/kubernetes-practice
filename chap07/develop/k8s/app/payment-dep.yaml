@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payment
-  namespace: kaniko
+  namespace: payment
 spec:
   selector:
     matchLabels:
@@ -11,14 +11,13 @@ spec:
   replicas: 1
   template:
     metadata:
-      namespace: kaniko
+      namespace: payment
       labels:
         name: payment
     spec:
       containers:
       - name: payment
         image: registry.gitlab.com/cloudnative_impress/tutorial/payment:latest
-#        image: weaveworksdemos/payment:0.4.3
         resources:
           limits:
             cpu: 100m

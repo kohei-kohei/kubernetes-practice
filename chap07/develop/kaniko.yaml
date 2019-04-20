@@ -1,0 +1,22 @@
+apiVersion: skaffold/v1beta8
+kind: Config
+build:
+  tagPolicy:
+    envTemplate:
+      template: "{{.IMAGE_NAME}}:kaniko"
+  artifacts:
+    - image: registry.gitlab.com/cloudnative_impress/tutorial/payment
+      kaniko:
+        buildContext:
+          localDir: {} 
+        cache: {}
+  cluster:
+    namespace: payment
+    pullSecretName: docker-secret
+    dockerConfig:
+#      secretName: docker-secret
+      path: ~/.docker/config.json
+deploy:
+  kubectl:
+    manifests:
+      - ../../develop/k8s/app/*.yaml
