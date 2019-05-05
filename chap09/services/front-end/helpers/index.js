@@ -76,21 +76,27 @@
    * });
    */
   helpers.simpleHttpRequest = function(url, req, res, next) {
-    console.log("x-request-id: " + req.headers['x-request-id']);
-    console.log("x-b3-traceid: " + req.headers['x-b3-traceid']);
-    console.log("x-b3-spanid: " + req.headers['x-b3-spanid']);
-    console.log("x-b3-parentspanid: " + req.headers['x-b3-parentspanid']);
-    console.log("x-b3-sampled: " + req.headers['x-b3-sampled']);
-    console.log("x-b3-flags: " + req.headers['x-b3-flags']);
-    console.log("x-ot-span-context: " + req.headers['x-ot-span-context']);
-    var headers = {
-        'x-request-id': req.headers['x-request-id'],
-        'x-b3-traceid': req.headers['x-b3-traceid'],
-        'x-b3-spanid': req.headers['x-b3-spanid'],
-        // 'x-b3-parentspanid': req.headers['x-b3-parentspanid'],
-        'x-b3-sampled': req.headers['x-b3-sampled'],
-        // 'x-b3-flags': req.headers['x-b3-flags'],
-        // 'x-ot-span-context': req.headers['x-ot-span-context']
+    var headers = {}
+    if (req.headers['x-request-id']) {
+      headers['x-request-id'] = req.headers['x-request-id'];
+    }
+    if (req.headers['x-b3-traceid']) {
+      headers['x-b3-traceid'] = req.headers['x-b3-traceid'];
+    }
+    if (req.headers['x-b3-spanid']) {
+      headers['x-b3-spanid'] = req.headers['x-b3-spanid'];
+    }
+    if (req.headers['x-b3-parentspanid']) {
+      headers['x-b3-parentspanid'] = req.headers['x-b3-parentspanid'];
+    }
+    if (req.headers['x-b3-sampled']) {
+      headers['x-b3-sampled'] = req.headers['x-b3-sampled'];
+    }
+    if (req.headers['x-b3-flags']) {
+      headers['x-b3-flags'] = req.headers['x-b3-flags'];
+    }
+    if (req.headers['x-ot-span-context']) {
+      headers['x-ot-span-context'] = req.headers['x-ot-span-context'];
     }
     var options = {
         url: url,
