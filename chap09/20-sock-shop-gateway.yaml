@@ -13,21 +13,3 @@ spec:
       number: 80
     hosts:
     - "*"
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: sock-shop
-  namespace: sock-shop-with-mesh
-spec:
-  hosts:
-  - "*"
-  gateways:
-  - sock-shop-gateway
-  http:
-  - route:
-    - destination:
-        host: front-end
-        port:
-          number: 8079
-    timeout: 1s

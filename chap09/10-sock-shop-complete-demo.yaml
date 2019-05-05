@@ -204,7 +204,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: front-end
+  name: front-end-v1
   labels:
     name: front-end
     version: v1
@@ -219,7 +219,7 @@ spec:
     spec:
       containers:
       - name: front-end
-        image: registry.gitlab.com/cloudnative_impress/tutorial/sock-shop-with-mesh/front-end:v1
+        image: registry.gitlab.com/cloudnative_impress/tutorial/front-end:v1
         resources:
           requests:
             cpu: 100m
@@ -234,6 +234,42 @@ spec:
             drop:
               - all
           readOnlyRootFilesystem: true
+        imagePullPolicy: Always
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: front-end-v2
+  labels:
+    name: front-end
+    version: v2
+  namespace: sock-shop-with-mesh
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: front-end
+        version: v2
+    spec:
+      containers:
+      - name: front-end
+        image: registry.gitlab.com/cloudnative_impress/tutorial/front-end:v2
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - name: node
+          containerPort: 8079
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+              - all
+          readOnlyRootFilesystem: true
+        imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
