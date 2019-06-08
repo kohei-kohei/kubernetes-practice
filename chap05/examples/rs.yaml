@@ -9,7 +9,6 @@ spec:
     metadata:
       labels:
         app: nginx   ## ReplicaSetのmetadataと同じラベル
-        version: "A" ## バージョンの指定
     spec:
       containers:
         - name: nginx-container

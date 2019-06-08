@@ -13,10 +13,9 @@ spec:
     metadata:
       labels:
         app: nginx
-        version: 'A'
     spec:
       containers:
       - name: nginx-container
-        image: nginx:1.15
+        image: nginx:1.15   ## Version指定
         ports:
         - containerPort: 80
