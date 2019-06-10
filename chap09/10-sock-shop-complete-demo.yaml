@@ -3,14 +3,14 @@ kind: Deployment
 metadata:
   name: carts-db
   labels:
-    name: carts-db
+    app: carts-db
   namespace: sock-shop-with-mesh
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: carts-db
+        app: carts-db
       annotations:
         sidecar.istio.io/inject: "false"
     spec:
@@ -42,7 +42,7 @@ kind: Service
 metadata:
   name: carts-db
   labels:
-    name: carts-db
+    app: carts-db
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -50,14 +50,14 @@ spec:
     port: 27017
     targetPort: mongo
   selector:
-    name: carts-db
+    app: carts-db
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: carts
   labels:
-    name: carts
+    app: carts
     version: v1
   namespace: sock-shop-with-mesh
 spec:
@@ -65,7 +65,7 @@ spec:
   template:
     metadata:
       labels:
-        name: carts
+        app: carts
         version: v1
     spec:
       containers:
@@ -101,7 +101,8 @@ kind: Service
 metadata:
   name: carts
   labels:
-    name: carts
+    app: carts
+    version: v1
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -109,21 +110,21 @@ spec:
     port: 80
     targetPort: http
   selector:
-    name: carts
+    app: carts
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: catalogue-db
   labels:
-    name: catalogue-db
+    app: catalogue-db
   namespace: sock-shop-with-mesh
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: catalogue-db
+        app: catalogue-db
       annotations:
         sidecar.istio.io/inject: "false"
     spec:
@@ -144,7 +145,7 @@ kind: Service
 metadata:
   name: catalogue-db
   labels:
-    name: catalogue-db
+    app: catalogue-db
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -152,14 +153,14 @@ spec:
     port: 3306
     targetPort: mysql
   selector:
-    name: catalogue-db
+    app: catalogue-db
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: catalogue
   labels:
-    name: catalogue
+    app: catalogue
     version: v1
   namespace: sock-shop-with-mesh
 spec:
@@ -167,7 +168,7 @@ spec:
   template:
     metadata:
       labels:
-        name: catalogue
+        app: catalogue
         version: v1
     spec:
       containers:
@@ -191,7 +192,7 @@ kind: Service
 metadata:
   name: catalogue
   labels:
-    name: catalogue
+    app: catalogue
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -199,14 +200,14 @@ spec:
     port: 80
     targetPort: http
   selector:
-    name: catalogue
+    app: catalogue
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: front-end-v1
   labels:
-    name: front-end
+    app: front-end
     version: v1
   namespace: sock-shop-with-mesh
 spec:
@@ -214,7 +215,7 @@ spec:
   template:
     metadata:
       labels:
-        name: front-end
+        app: front-end
         version: v1
     spec:
       containers:
@@ -235,13 +236,15 @@ spec:
               - all
           readOnlyRootFilesystem: true
         imagePullPolicy: Always
+      imagePullSecrets:
+      - name: reggitlab
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: front-end-v2
   labels:
-    name: front-end
+    app: front-end
     version: v2
   namespace: sock-shop-with-mesh
 spec:
@@ -249,7 +252,7 @@ spec:
   template:
     metadata:
       labels:
-        name: front-end
+        app: front-end
         version: v2
     spec:
       containers:
@@ -270,13 +273,15 @@ spec:
               - all
           readOnlyRootFilesystem: true
         imagePullPolicy: Always
+      imagePullSecrets:
+      - name: reggitlab
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: front-end
   labels:
-    name: front-end
+    app: front-end
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -284,21 +289,21 @@ spec:
     port: 8079
     targetPort: node
   selector:
-    name: front-end
+    app: front-end
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: orders-db
   labels:
-    name: orders-db
+    app: orders-db
   namespace: sock-shop-with-mesh
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: orders-db
+        app: orders-db
       annotations:
         sidecar.istio.io/inject: "false"
     spec:
@@ -330,7 +335,7 @@ kind: Service
 metadata:
   name: orders-db
   labels:
-    name: orders-db
+    app: orders-db
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -338,14 +343,14 @@ spec:
     port: 27017
     targetPort: mongo
   selector:
-    name: orders-db
+    app: orders-db
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: orders
   labels:
-    name: orders
+    app: orders
     version: v1
   namespace: sock-shop-with-mesh
 spec:
@@ -353,7 +358,7 @@ spec:
   template:
     metadata:
       labels:
-        name: orders
+        app: orders
         version: v1
     spec:
       containers:
@@ -389,7 +394,7 @@ kind: Service
 metadata:
   name: orders
   labels:
-    name: orders
+    app: orders
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -397,14 +402,14 @@ spec:
     port: 80
     targetPort: http
   selector:
-    name: orders
+    app: orders
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: payment
   labels:
-    name: payment
+    app: payment
     version: v1
   namespace: sock-shop-with-mesh
 spec:
@@ -412,7 +417,7 @@ spec:
   template:
     metadata:
       labels:
-        name: payment
+        app: payment
         version: v1
     spec:
       containers:
@@ -436,7 +441,7 @@ kind: Service
 metadata:
   name: payment
   labels:
-    name: payment
+    app: payment
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -444,14 +449,14 @@ spec:
     port: 80
     targetPort: http
   selector:
-    name: payment
+    app: payment
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: queue-master
   labels:
-    name: queue-master
+    app: queue-master
     version: v1
   namespace: sock-shop-with-mesh
 spec:
@@ -459,7 +464,7 @@ spec:
   template:
     metadata:
       labels:
-        name: queue-master
+        app: queue-master
         version: v1
     spec:
       containers:
@@ -474,7 +479,7 @@ kind: Service
 metadata:
   name: queue-master
   labels:
-    name: queue-master
+    app: queue-master
   annotations:
     prometheus.io/path: "/prometheus"
   namespace: sock-shop-with-mesh
@@ -484,21 +489,21 @@ spec:
     port: 80
     targetPort: http
   selector:
-    name: queue-master
+    app: queue-master
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: rabbitmq
   labels:
-    name: rabbitmq
+    app: rabbitmq
   namespace: sock-shop-with-mesh
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: rabbitmq
+        app: rabbitmq
     spec:
       containers:
       - name: rabbitmq
@@ -528,7 +533,7 @@ kind: Service
 metadata:
   name: rabbitmq
   labels:
-    name: rabbitmq
+    app: rabbitmq
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -545,14 +550,14 @@ spec:
     port: 15672
     targetPort: management
   selector:
-    name: rabbitmq
+    app: rabbitmq
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: shipping
   labels:
-    name: shipping
+    app: shipping
     version: v1
   namespace: sock-shop-with-mesh
 spec:
@@ -560,7 +565,7 @@ spec:
   template:
     metadata:
       labels:
-        name: shipping
+        app: shipping
         version: v1
     spec:
       containers:
@@ -596,7 +601,7 @@ kind: Service
 metadata:
   name: shipping
   labels:
-    name: shipping
+    app: shipping
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -604,21 +609,21 @@ spec:
     port: 80
     targetPort: http
   selector:
-    name: shipping
+    app: shipping
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: user-db
   labels:
-    name: user-db
+    app: user-db
   namespace: sock-shop-with-mesh
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: user-db
+        app: user-db
       annotations:
         sidecar.istio.io/inject: "false"
     spec:
@@ -650,7 +655,7 @@ kind: Service
 metadata:
   name: user-db
   labels:
-    name: user-db
+    app: user-db
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -658,14 +663,14 @@ spec:
     port: 27017
     targetPort: mongo
   selector:
-    name: user-db
+    app: user-db
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: user
   labels:
-    name: user
+    app: user
     version: v1
   namespace: sock-shop-with-mesh
 spec:
@@ -673,7 +678,7 @@ spec:
   template:
     metadata:
       labels:
-        name: user
+        app: user
         version: v1
     spec:
       containers:
@@ -700,7 +705,7 @@ kind: Service
 metadata:
   name: user
   labels:
-    name: user
+    app: user
   namespace: sock-shop-with-mesh
 spec:
   ports:
@@ -708,4 +713,4 @@ spec:
     port: 80
     targetPort: http
   selector:
-    name: user
+    app: user
