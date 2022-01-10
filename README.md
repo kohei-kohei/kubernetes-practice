@@ -20,10 +20,10 @@ export PATH="$HOME/.kubeadm-dind-cluster:$PATH"
 
 ```
 # クラスタを停止
-./dind-cluster-v1.12.sh stop
+./dind-cluster-v1.15.sh stop
 
 # コンテナやボリュームの削除
-./dind-cluster-v1.12.sh clean
+./dind-cluster-v1.15.sh clean
 ```
 
 ## Dashboard
