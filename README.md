@@ -8,17 +8,28 @@ Tutorial Contents
 brew install kubectl kind
 ```
 
-## Setup
+## Usage
 
+create cluster
 ```zsh
-kind create cluster --config ./setup/kind.yaml
-kubectl cluster-info --context kind-kind-cluster
+kind create cluster --config ./setup/practice.yaml
+kubectl cluster-info --context kind-practice-cluster
 kubectl get nodes
 ```
 
-delete
+deploy
 ```zsh
-kind delete cluster --name kind-cluster
+kubectl apply -f setup/practice-deployment.yaml
+kubectl get pods -o wide
+kubectl create service nodeport nginx --tcp=8080:80
+kubectl port-forward --address localhost svc/nginx 8080:8080
+```
+
+delete service & cluster
+```zsh
+kubectl delete services nginx
+kubectl delete -f setup/practice-deployment.yaml
+kind delete cluster --name practice-cluster
 ```
 
 ## Reference
